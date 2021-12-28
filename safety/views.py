@@ -1,17 +1,15 @@
-from django.shortcuts import render, redirect
-from django.http import HttpResponse, JsonResponse
-from django.db.models import Avg, Sum
-from django.core.serializers import serialize
-from django.contrib import messages
-from django.contrib.auth.decorators import login_required
-from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-
-from .models import User, Place
-
-
+import os
 import json
 import dotenv
-import os
+
+
+from django.shortcuts import render, redirect
+from django.http import JsonResponse
+from django.db.models import Avg
+from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from .models import Place
+
 
 
 
@@ -21,47 +19,78 @@ def index(request):
     API_KEY = os.environ.get("API_KEY")
     OAUTH_KEY = os.environ.get("OAUTH_KEY")
 
-    return render(request, "safety/index.html", {
-        "user": user,
-        "API_KEY": API_KEY,
-        "OAUTH_KEY": OAUTH_KEY
-    })
+    return render(
+        request,
+        "safety/index.html",
+        {"user": user, "API_KEY": API_KEY, "OAUTH_KEY": OAUTH_KEY},
+    )
 
 
-#Check average ratings of review
+# Check average ratings of review
 def review(request, place_id):
     try:
-        placesafety = round(float(Place.objects.filter(placeid=place_id).aggregate(Avg("safety"))['safety__avg']), 2)
+        placesafety = round(
+            float(
+                Place.objects.filter(placeid=place_id).aggregate(Avg("safety"))[
+                    "safety__avg"
+                ]
+            ),
+            2,
+        )
     except:
-         placesafety = Place.objects.filter(placeid=place_id).aggregate(Avg("safety"))['safety__avg']
-
+        placesafety = Place.objects.filter(placeid=place_id).aggregate(Avg("safety"))[
+            "safety__avg"
+        ]
 
     try:
-        placehygiene = round(float(Place.objects.filter(placeid=place_id).aggregate(Avg("hygiene"))['hygiene__avg']), 2)
+        placehygiene = round(
+            float(
+                Place.objects.filter(placeid=place_id).aggregate(Avg("hygiene"))[
+                    "hygiene__avg"
+                ]
+            ),
+            2,
+        )
     except:
-        placehygiene = Place.objects.filter(placeid=place_id).aggregate(Avg("hygiene"))['hygiene__avg']
+        placehygiene = Place.objects.filter(placeid=place_id).aggregate(Avg("hygiene"))[
+            "hygiene__avg"
+        ]
 
     try:
-        placesingle = "{:.0%}".format(Place.objects.filter(placeid=place_id, single="True").count()/Place.objects.filter(placeid=place_id).count())
+        placesingle = "{:.0%}".format(
+            Place.objects.filter(placeid=place_id, single="True").count()
+            / Place.objects.filter(placeid=place_id).count()
+        )
     except ZeroDivisionError:
         placesingle = "0%"
 
     try:
-        placecouple = "{:.0%}".format(Place.objects.filter(placeid=place_id, couple="True").count()/Place.objects.filter(placeid=place_id).count())
+        placecouple = "{:.0%}".format(
+            Place.objects.filter(placeid=place_id, couple="True").count()
+            / Place.objects.filter(placeid=place_id).count()
+        )
     except ZeroDivisionError:
         placecouple = "0%"
 
     try:
-        placegroup = "{:.0%}".format(Place.objects.filter(placeid=place_id, group="True").count()/Place.objects.filter(placeid=place_id).count())
+        placegroup = "{:.0%}".format(
+            Place.objects.filter(placeid=place_id, group="True").count()
+            / Place.objects.filter(placeid=place_id).count()
+        )
     except ZeroDivisionError:
         placegroup = "0%"
 
     try:
-        placelgbtq = "{:.0%}".format(Place.objects.filter(placeid=place_id, lgbtq="True").count()/Place.objects.filter(placeid=place_id).count())
+        placelgbtq = "{:.0%}".format(
+            Place.objects.filter(placeid=place_id, lgbtq="True").count()
+            / Place.objects.filter(placeid=place_id).count()
+        )
     except ZeroDivisionError:
         placelgbtq = "0%"
 
-    placereview = Place.objects.filter(placeid=place_id).values_list('review', flat=True)
+    placereview = Place.objects.filter(placeid=place_id).values_list(
+        "review", flat=True
+    )
     rev = []
     for place in placereview:
         rev.append(place)
@@ -69,54 +98,52 @@ def review(request, place_id):
     test = json.dumps(rev)
     total = Place.objects.filter(placeid=place_id).count()
 
+    return JsonResponse(
+        {
+            "placesafety": placesafety,
+            "placehygiene": placehygiene,
+            "placesingle": placesingle,
+            "placecouple": placecouple,
+            "placegroup": placegroup,
+            "placelgbtq": placelgbtq,
+            "test": test,
+            "total": total,
+            "status": 200,
+        }
+    )
 
 
-
-
-    return JsonResponse({
-        "placesafety": placesafety,
-        "placehygiene": placehygiene,
-        "placesingle": placesingle,
-        "placecouple": placecouple,
-        "placegroup": placegroup,
-        "placelgbtq": placelgbtq,
-        "test": test,
-        "total": total,
-         "status": 200})
-
-
-
-
-
-#get the review data for reviewpage
+# get the review data for reviewpage
 def reviewpage(request, place_id):
     if request.method == "GET":
         user = request.user
         try:
             place = Place.objects.get(user=user, placeid=place_id)
 
-            return JsonResponse({
-                "placesaf": place.safety,
-                "placehyg": place.hygiene,
-                "placesing": place.single,
-                "placecoup": place.couple,
-                "placegrp": place.group,
-                "placelgbtq": place.lgbtq,
-                "placereview": place.review,
-                "status": 200
-                })
+            return JsonResponse(
+                {
+                    "placesaf": place.safety,
+                    "placehyg": place.hygiene,
+                    "placesing": place.single,
+                    "placecoup": place.couple,
+                    "placegrp": place.group,
+                    "placelgbtq": place.lgbtq,
+                    "placereview": place.review,
+                    "status": 200,
+                }
+            )
         except:
-            return JsonResponse({
-            "placesaf": 0,
-            "placehyg": 0,
-            "placesing": 0,
-            "placecoup": 0,
-            "placegrp": 0,
-            "placelgbtq": 0,
-            "status": 200
-
-            })
-
+            return JsonResponse(
+                {
+                    "placesaf": 0,
+                    "placehyg": 0,
+                    "placesing": 0,
+                    "placecoup": 0,
+                    "placegrp": 0,
+                    "placelgbtq": 0,
+                    "status": 200,
+                }
+            )
 
     if request.method == "PUT":
         user = request.user
@@ -142,7 +169,6 @@ def reviewpage(request, place_id):
             place2.save()
             return JsonResponse({}, status=200)
 
-
     if request.method == "DELETE":
         data = json.loads(request.body)
         user = request.user
@@ -156,9 +182,9 @@ def reviewpage(request, place_id):
 @login_required
 def profile(request):
     user = request.user
-    profile = Place.objects.filter(user=user).order_by('-timestamp')
+    profile = Place.objects.filter(user=user).order_by("-timestamp")
     paginator = Paginator(profile, 5)
-    page = request.GET.get('page', 1)
+    page = request.GET.get("page", 1)
     try:
         profile = paginator.page(page)
     except PageNotAnInteger:
@@ -166,18 +192,4 @@ def profile(request):
     except EmptyPage:
         profile = paginator.page(paginator.num_pages)
 
-
-    return render(request, "safety/profile.html", {
-    "profile": profile
-    })
-
-
-
-
-
-
-
-
-
-
-
+    return render(request, "safety/profile.html", {"profile": profile})
