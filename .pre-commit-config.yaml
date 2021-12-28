@@ -1,0 +1,17 @@
+repos:
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v3.2.0
+    hooks:
+    -   id: trailing-whitespace
+-   repo: https://github.com/python/black
+    rev: 21.12b0
+    hooks:
+    -   id: black
+-   repo: https://github.com/PyCQA/flake8
+    rev: 4.0.1
+    hooks:
+    -   id: flake8
+# -   repo: https://github.com/PyCQA/pylint
+#     rev: 2.12.2
+#     hooks:
+#     -   id: pylint
