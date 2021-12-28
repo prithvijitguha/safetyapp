@@ -1,3 +1,15 @@
+"""
+Views module for safety
+"""
+
+#pylint: disable=invalid-name,
+#pylint: disable=consider-using-f-string,
+#pylint: disable=import-error,
+#pylint: disable=missing-function-docstring,
+#pylint: disable=redefined-outer-name,
+#pylint: disable=bare-except
+
+
 import os
 import json
 import dotenv
