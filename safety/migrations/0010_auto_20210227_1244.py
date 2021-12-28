@@ -7,13 +7,13 @@ import django.utils.timezone
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('safety', '0009_place_timestamp'),
+        ("safety", "0009_place_timestamp"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='place',
-            name='timestamp',
+            model_name="place",
+            name="timestamp",
             field=models.DateTimeField(default=django.utils.timezone.now),
         ),
     ]
