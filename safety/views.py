@@ -2,13 +2,13 @@
 Views module for safety
 """
 
-#pylint: disable=invalid-name,
-#pylint: disable=consider-using-f-string,
-#pylint: disable=import-error,
-#pylint: disable=missing-function-docstring,
-#pylint: disable=redefined-outer-name,
-#pylint: disable=bare-except
-
+# pylint: disable=invalid-name,
+# pylint: disable=consider-using-f-string,
+# pylint: disable=import-error,
+# pylint: disable=missing-function-docstring,
+# pylint: disable=redefined-outer-name,
+# pylint: disable=bare-except
+# flake8: noqa: E303,E501,E722
 
 import os
 import json
@@ -21,8 +21,6 @@ from django.db.models import Avg
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from .models import Place
-
-
 
 
 def index(request):
