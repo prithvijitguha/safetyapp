@@ -1,0 +1,426 @@
+{% extends "safety/index.html" %}
+
+{% load static %}
+
+{% block body %}
+
+
+<!--Alerts-->
+
+<div id="myModal" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content">
+        <p><br><br>Deleted!<br><br></p>
+    </div>
+</div>
+
+<div id="successmodal" class="modal">
+  <!-- Modal content -->
+  <div class="modal-content">
+      <p><br><br>Success!<br><br></p>
+  </div>
+</div>
+
+<!---This is reference for submit handler to know which post is being edited-->
+
+
+{% for person in profile %}
+<br>
+<br>
+<br>
+
+<div id="deletedpost-{{person.placeid}}" class="container deletedpost"><h3><strong>Deleted Review</strong></h3></div>
+<div id="editreview-{{person.placeid}}" class="reviews">
+<h2><strong>{{ person.name}}</strong></h2>
+<li style="list-style-type: none; display: none;"><strong>Safety Rating:</strong><span  class="safetyrating" id="saferating-{{person.placeid}}">{{ person.safety }} Stars</span> </li>
+<div id="safetyratingsystem-{{person.placeid}}">
+  <div id="safety5star-{{person.placeid}}">
+    <span class="heading">Safety</span>
+    <span class="fa fa-star checked"></span>
+    <span class="fa fa-star checked"></span>
+    <span class="fa fa-star checked"></span>
+    <span class="fa fa-star checked"></span>
+    <span class="fa fa-star checked"></span>
+  </div>
+  <div id="safety4star-{{person.placeid}}">
+      <span class="heading">Safety</span>
+      <span class="fa fa-star checked"></span>
+      <span class="fa fa-star checked"></span>
+      <span class="fa fa-star checked"></span>
+      <span class="fa fa-star checked"></span>
+      <span class="fa fa-star"></span>
+  </div>
+  <div id="safety3star-{{person.placeid}}">
+      <span class="heading">Safety</span>
+      <span class="fa fa-star checked"></span>
+      <span class="fa fa-star checked"></span>
+      <span class="fa fa-star checked"></span>
+      <span class="fa fa-star"></span>
+      <span class="fa fa-star"></span>
+  </div>
+  <div id="safety2star-{{person.placeid}}">
+      <span class="heading">Safety</span>
+      <span class="fa fa-star checked"></span>
+      <span class="fa fa-star checked"></span>
+      <span class="fa fa-star"></span>
+      <span class="fa fa-star"></span>
+      <span class="fa fa-star"></span>
+  </div>
+  <div id="safety1star-{{person.placeid}}">
+      <span class="heading">Safety</span>
+      <span class="fa fa-star checked"></span>
+      <span class="fa fa-star"></span>
+      <span class="fa fa-star"></span>
+      <span class="fa fa-star"></span>
+      <span class="fa fa-star"></span>
+  </div>
+  <div id="safetynostar-{{person.placeid}}">
+      <span class="heading">Safety</span>
+      <span class="fa fa-star"></span>
+      <span class="fa fa-star"></span>
+      <span class="fa fa-star"></span>
+      <span class="fa fa-star"></span>
+      <span class="fa fa-star"></span>
+  </div>
+</div>
+
+<!---Hygiene Rating System-->
+<li style="list-style-type: none; display: none;"><strong>Hygiene Rating:</strong><span class="hygienerating" id="hygrating-{{person.placeid}}">{{ person.hygiene }} Stars</span></li>
+<div id=hygieneratingsystem-{{person.placeid}}>
+<div id="hygiene5star-{{person.placeid}}">
+  <span class="heading">Hygiene</span>
+  <span class="fa fa-star checked"></span>
+  <span class="fa fa-star checked"></span>
+  <span class="fa fa-star checked"></span>
+  <span class="fa fa-star checked"></span>
+  <span class="fa fa-star checked"></span>
+  </div>
+  <div id="hygiene4star-{{person.placeid}}">
+      <span class="heading">Hygiene</span>
+      <span class="fa fa-star checked"></span>
+      <span class="fa fa-star checked"></span>
+      <span class="fa fa-star checked"></span>
+      <span class="fa fa-star checked"></span>
+      <span class="fa fa-star"></span>
+  </div>
+  <div id="hygiene3star-{{person.placeid}}">
+      <span class="heading">Hygiene</span>
+      <span class="fa fa-star checked"></span>
+      <span class="fa fa-star checked"></span>
+      <span class="fa fa-star checked"></span>
+      <span class="fa fa-star"></span>
+      <span class="fa fa-star"></span>
+  </div>
+  <div id="hygiene2star-{{person.placeid}}">
+      <span class="heading">Hygiene</span>
+      <span class="fa fa-star checked"></span>
+      <span class="fa fa-star checked"></span>
+      <span class="fa fa-star"></span>
+      <span class="fa fa-star"></span>
+      <span class="fa fa-star"></span>
+  </div>
+  <div id="hygiene1star-{{person.placeid}}">
+      <span class="heading">Hygiene</span>
+      <span class="fa fa-star checked"></span>
+      <span class="fa fa-star"></span>
+      <span class="fa fa-star"></span>
+      <span class="fa fa-star"></span>
+      <span class="fa fa-star"></span>
+  </div>
+  <div id="hygienenostar-{{person.placeid}}">
+      <span class="heading">Hygiene</span>
+      <span class="fa fa-star"></span>
+      <span class="fa fa-star"></span>
+      <span class="fa fa-star"></span>
+      <span class="fa fa-star"></span>
+      <span class="fa fa-star"></span>
+  </div>
+</div>
+
+
+
+
+
+<li class="recommendedclassprofile"><strong>Single Recommended:</strong><span class="recclass" id="singlerat-{{person.placeid}}">{{ person.single }}</span></li>
+<li class="recommendedclassprofile"><strong>Couple Recommended:</strong><span class="recclass" id="couplerat-{{person.placeid}}">{{ person.couple }}</span> </li>
+<li class="recommendedclassprofile"><strong>Group Recommended:</strong><span class="recclass" id="grouprat-{{person.placeid}}">{{ person.group }}</span></li>
+<li class="recommendedclassprofile"><strong>LGBTQ Friendly:</strong><span class="recclass" id="lgbtqrat-{{person.placeid}}">{{ person.lgbtq }}</span> </li>
+<h4 id="txtreview-{{person.placeid}}"><strong>{{ person.review }}</strong></h4><br>
+<!--Change true/false to yes/no--->
+<script>
+s = document.getElementById('singlerat-{{person.placeid}}')
+c = document.getElementById('couplerat-{{person.placeid}}')
+g = document.getElementById('grouprat-{{person.placeid}}')
+l = document.getElementById('lgbtqrat-{{person.placeid}}')
+
+
+
+rec = [s, c, g, l]
+
+for (i=0; i < rec.length; i++) {
+  if (rec[i].innerHTML == "True") {
+    rec[i].innerHTML = "Yes"
+  }
+  else {
+    rec[i].innerHTML = "No"
+  }
+}
+
+
+</script>
+<br>
+<div class="btn-group-vertical" role="group" aria-label="Basic example"></div>
+<button type="button" data-place="{{person.placeid}}"  id="editbtn" class="edit btn btn-primary">Edit</button>
+<button type="button" data-place="{{person.placeid}}" class="delete btn btn-primary">Delete</button>
+</div>
+</div>
+<script>
+  saf = document.getElementById('saferating-{{person.placeid}}')
+  safetysystem = document.getElementById('safetyratingsystem-{{person.placeid}}')
+  if (saf.innerHTML == '5 Stars') {
+    document.getElementById('safety5star-{{person.placeid}}').style.display = "block"
+    document.getElementById('safety4star-{{person.placeid}}').style.display = "none"
+    document.getElementById('safety3star-{{person.placeid}}').style.display = "none"
+    document.getElementById('safety2star-{{person.placeid}}').style.display = "none"
+    document.getElementById('safety1star-{{person.placeid}}').style.display = "none"
+    document.getElementById('safetynostar-{{person.placeid}}').style.display = "none"
+  }
+
+  else if (saf.innerHTML == '4 Stars') {
+    document.getElementById('safety5star-{{person.placeid}}').style.display = "none"
+    document.getElementById('safety4star-{{person.placeid}}').style.display = "block"
+    document.getElementById('safety3star-{{person.placeid}}').style.display = "none"
+    document.getElementById('safety2star-{{person.placeid}}').style.display = "none"
+    document.getElementById('safety1star-{{person.placeid}}').style.display = "none"
+    document.getElementById('safetynostar-{{person.placeid}}').style.display = "none"
+  }
+
+  else if (saf.innerHTML == '3 Stars') {
+    document.getElementById('safety5star-{{person.placeid}}').style.display = "none"
+    document.getElementById('safety4star-{{person.placeid}}').style.display = "none"
+    document.getElementById('safety3star-{{person.placeid}}').style.display = "block"
+    document.getElementById('safety2star-{{person.placeid}}').style.display = "none"
+    document.getElementById('safety1star-{{person.placeid}}').style.display = "none"
+    document.getElementById('safetynostar-{{person.placeid}}').style.display = "none"
+  }
+
+  else if (saf.innerHTML == '2 Stars') {
+    document.getElementById('safety5star-{{person.placeid}}').style.display = "none"
+    document.getElementById('safety4star-{{person.placeid}}').style.display = "none"
+    document.getElementById('safety3star-{{person.placeid}}').style.display = "none"
+    document.getElementById('safety2star-{{person.placeid}}').style.display = "block"
+    document.getElementById('safety1star-{{person.placeid}}').style.display = "none"
+    document.getElementById('safetynostar-{{person.placeid}}').style.display = "none"
+  }
+
+  else if (saf.innerHTML == '1 Stars') {
+    document.getElementById('safety5star-{{person.placeid}}').style.display = "none"
+    document.getElementById('safety4star-{{person.placeid}}').style.display = "none"
+    document.getElementById('safety3star-{{person.placeid}}').style.display = "none"
+    document.getElementById('safety2star-{{person.placeid}}').style.display = "none"
+    document.getElementById('safety1star-{{person.placeid}}').style.display = "block"
+    document.getElementById('safetynostar-{{person.placeid}}').style.display = "none"
+  }
+
+  else if (saf.innerHTML == '0 Stars') {
+    document.getElementById('safety5star-{{person.placeid}}').style.display = "none"
+    document.getElementById('safety4star-{{person.placeid}}').style.display = "none"
+    document.getElementById('safety3star-{{person.placeid}}').style.display = "none"
+    document.getElementById('safety2star-{{person.placeid}}').style.display = "none"
+    document.getElementById('safety1star-{{person.placeid}}').style.display = "none"
+    document.getElementById('safetynostar-{{person.placeid}}').style.display = "block"
+  }
+
+
+
+  //hygiene rating system
+
+  hyg = document.getElementById('hygrating-{{person.placeid}}')
+  hygienesystem = document.getElementById('safetyratingsystem-{{person.placeid}}')
+  if (hyg.innerHTML == '5 Stars') {
+    document.getElementById('hygiene5star-{{person.placeid}}').style.display = "block"
+    document.getElementById('hygiene4star-{{person.placeid}}').style.display = "none"
+    document.getElementById('hygiene3star-{{person.placeid}}').style.display = "none"
+    document.getElementById('hygiene2star-{{person.placeid}}').style.display = "none"
+    document.getElementById('hygiene1star-{{person.placeid}}').style.display = "none"
+    document.getElementById('hygienenostar-{{person.placeid}}').style.display = "none"
+  }
+
+  else if (hyg.innerHTML == '4 Stars') {
+    document.getElementById('hygiene5star-{{person.placeid}}').style.display = "none"
+    document.getElementById('hygiene4star-{{person.placeid}}').style.display = "block"
+    document.getElementById('hygiene3star-{{person.placeid}}').style.display = "none"
+    document.getElementById('hygiene2star-{{person.placeid}}').style.display = "none"
+    document.getElementById('hygiene1star-{{person.placeid}}').style.display = "none"
+    document.getElementById('hygienenostar-{{person.placeid}}').style.display = "none"
+  }
+
+  else if (hyg.innerHTML == '3 Stars') {
+    document.getElementById('hygiene5star-{{person.placeid}}').style.display = "none"
+    document.getElementById('hygiene4star-{{person.placeid}}').style.display = "none"
+    document.getElementById('hygiene3star-{{person.placeid}}').style.display = "block"
+    document.getElementById('hygiene2star-{{person.placeid}}').style.display = "none"
+    document.getElementById('hygiene1star-{{person.placeid}}').style.display = "none"
+    document.getElementById('hygienenostar-{{person.placeid}}').style.display = "none"
+  }
+
+  else if (hyg.innerHTML == '2 Stars') {
+    document.getElementById('hygiene5star-{{person.placeid}}').style.display = "none"
+    document.getElementById('hygiene4star-{{person.placeid}}').style.display = "none"
+    document.getElementById('hygiene3star-{{person.placeid}}').style.display = "none"
+    document.getElementById('hygiene2star-{{person.placeid}}').style.display = "block"
+    document.getElementById('hygiene1star-{{person.placeid}}').style.display = "none"
+    document.getElementById('hygienenostar-{{person.placeid}}').style.display = "none"
+  }
+
+  else if (hyg.innerHTML == '1 Stars') {
+    document.getElementById('hygiene5star-{{person.placeid}}').style.display = "none"
+    document.getElementById('hygiene4star-{{person.placeid}}').style.display = "none"
+    document.getElementById('hygiene3star-{{person.placeid}}').style.display = "none"
+    document.getElementById('hygiene2star-{{person.placeid}}').style.display = "none"
+    document.getElementById('hygiene1star-{{person.placeid}}').style.display = "block"
+    document.getElementById('hygienenostar-{{person.placeid}}').style.display = "none"
+  }
+
+  else if (hyg.innerHTML == '0 Stars') {
+    document.getElementById('hygiene5star-{{person.placeid}}').style.display = "none"
+    document.getElementById('hygiene4star-{{person.placeid}}').style.display = "none"
+    document.getElementById('hygiene3star-{{person.placeid}}').style.display = "none"
+    document.getElementById('hygiene2star-{{person.placeid}}').style.display = "none"
+    document.getElementById('hygiene1star-{{person.placeid}}').style.display = "none"
+    document.getElementById('hygienenostar-{{person.placeid}}').style.display = "block"
+  }
+
+
+
+
+
+
+</script>
+</div>
+
+<div id="submitreview-{{person.placeid}}" data-place="{{person.placeid}}" class="submitclass container" style="display: none; text-align: center;">
+    <form id="submissionform" class="submissionformclass">
+        <label for="name">Name:</label>
+        <input type="text" id="name-{{person.placeid}}" name="name" value="{{person.name}}" disabled="true"><br><br>
+        <label for="safetyrating" class="form-label" >Safety Rating (Between 0 and 5) </label>
+        <input id="safetyrating-{{person.placeid}}" type="range" class="form-range" min="0" max="5" value={{person.safety}}><br>
+        <label for="hygienerating" class="form-label">Hygiene Rating (Between 0 and 5) </label>
+        <input id="hygienerating-{{person.placeid}}" type="range" class="form-range" min="0" max="5" value={{person.hygiene}}><br>      
+        
+        <div class="form-check">
+            <label class="form-check-label" for="singlerating">
+                Single 
+            </label>
+            <input id="singlerating-{{person.placeid}}" class="form-check-input" type="checkbox" value="">
+        </div>
+        <div class="form-check">
+            <label class="form-check-label" for="couplerating">
+              Couple 
+            </label>
+            <input id="couplerating-{{person.placeid}}" class="form-check-input" type="checkbox" value="">
+        </div>
+        <div class="form-check">
+            <label class="form-check-label" for="grouprating">
+              Group 
+            </label>
+            <input id="grouprating-{{person.placeid}}" class="form-check-input" type="checkbox" value="">
+        </div>
+        <div class="form-check">
+            <label class="form-check-label" for="lgbtqrating">
+              LGBTQ Safe
+            </label>
+            <input id="lgbtqrating-{{person.placeid}}" class="form-check-input" type="checkbox" value=""><br><br>
+           
+        </div>
+        <textarea rows="4" cols="50" name="textreview" class="textreview" id="textreview-{{person.placeid}}" placeholder="Write a review">{{person.review}}</textarea><br><br>
+        <button type="button" data-place="{{person.placeid}}"  id="submtibtn" class="submit btn btn-primary">Submit</button>
+        <button type="button" data-place="{{person.placeid}}"  id="cancelbtn" class="cancel btn btn-primary">Cancel</button>
+  </form>
+</div>
+<!-- Prefill submission form-->
+<script>
+sr = document.getElementById("singlerat-{{person.placeid}}")
+cr = document.getElementById("couplerat-{{person.placeid}}")
+gr = document.getElementById("grouprat-{{person.placeid}}")
+lg = document.getElementById("lgbtqrat-{{person.placeid}}")
+
+
+//target nodes
+targetsr = document.getElementById('singlerating-{{person.placeid}}')
+targetcr = document.getElementById('couplerating-{{person.placeid}}')
+targetgr = document.getElementById('grouprating-{{person.placeid}}')
+targetlg = document.getElementById('lgbtqrating-{{person.placeid}}')
+
+
+if (sr.innerHTML == "Yes") {
+  
+  targetsr.checked = true
+  
+}
+else {
+  targetsr.checked = false
+}
+
+
+if (cr.innerHTML == "Yes") {
+ 
+  targetcr.checked = true
+}
+else {
+  targetcr.checked = false
+}
+
+
+if (gr.innerHTML == "Yes") {
+ 
+  targetgr.checked = true
+}
+else {
+  targetgr.checked = false
+}
+
+
+if (lg.innerHTML == "Yes") {
+  
+  targetlg.checked = true
+}
+else {
+  targetlg.checked = false
+}
+
+</script>
+
+{% endfor %}
+<br><br>
+<!--Pagination-->
+{% if profile.has_other_pages %}
+  <ul class="pagination justify-content-center">
+    {% if profile.has_previous %}
+      <li><a href="?page={{ profile.previous_page_number }}">Previous</a></li>
+    {% else %}
+      <li class="disabled"><span>Previous</span></li>
+    {% endif %}
+    {% for i in profile.paginator.page_range %}
+      {% if profile.number == i %}
+        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+      {% else %}
+        <li><a href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if profilehas_next %}
+      <li><a href="?page={{ profile.next_page_number }}">Next</a></li>
+    {% else %}
+      <li class="disabled"><span>Next</span></li>
+    {% endif %}
+  </ul>
+
+{% endif %}
+
+
+
+
+
+{% block script %}<script src="{% static 'safety/profile.js' %}"></script>{% endblock %}
+
+{% endblock %}

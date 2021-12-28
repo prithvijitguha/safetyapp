@@ -1,0 +1,335 @@
+{% load static %}
+
+<!DOCTYPE html> 
+<html lang="en">
+    <head>
+        
+        <title>{% block title %}safeIndex{% endblock %}</title>
+        <link href="{% static 'safety/styles.css' %}" rel="stylesheet">
+        <link rel="shortcut icon" href="#">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        
+        
+        
+        
+       
+                <!---Google oAuth-->
+        <meta name="google-signin-client_id" content={{OAUTH_KEY}}>    
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    
+       
+    </head>
+    <body>   
+    
+
+  
+
+
+    <!---Navbar-->
+    <nav class="navbar navbar-expand-md navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{%url 'index' %}"><img src="{% static 'safety/safelogo.png' %}" width="125" height="125" fill="currentColor"> </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="{%url 'index' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" id="aboutuslink" aria-current="page"  href="#">About</a>
+                </li>
+                <script>
+                    //About button clicked
+                        document.getElementById('aboutuslink').addEventListener('click', function() {
+                            document.getElementById('about').style.display = "block";
+                                
+                            aboutmodal = document.getElementById('about');
+
+                            window.onclick = function(event) {
+                                if (event.target == aboutmodal) {
+                                aboutmodal.style.display = "none";
+                            }
+                            }
+
+                        })
+                </script>
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link active"  aria-current="page"  href="{%url 'profile' %}">Profile</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Profile</a>
+                </li>
+
+                {% endif %}
+            </ul>
+            <ul class="navbar-nav ms-auto">
+                
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="accounts/logout" >Logout</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="accounts/login" >Login</a>
+                </li>
+                {% endif %}
+            </ul>
+            </div>
+        </div>
+        </nav>
+         <!---Navbar ends-->
+
+    
+    <!--About Us-->
+    <div class="modal" id="about" style="display: none;">
+        <div class="modal-content">
+        <p>Welcome to safeindex! We aggregate reviews on places based on safety and hygiene.<br><br><br>
+            The idea being to bring more awareness to safety in an establishment and make establishments pay more attention and take measures to make places safer.<br><br>
+            Safety rating determines how safe do you feel at that establishment, how are the staff? attendants? other patrons and general environment of that establishment?<br><br>
+            Hygiene rating would be how clean are the restroom facilities, utensils, park benches or how clean are the theater seats.<br><br>
+            
+            Created by<br>
+            <a href="http://prithvijitguha.github.io/" target="_blank">Prithivjit Guha</a>
+
+        </p>
+        </div>
+    </div>
+
+
+    {% block body %}
+    
+
+    
+    <div class="intro" id="intro">
+        <h1>safeindex</h1>
+        <p>Welcome to safeindex! We aggregate reviews on places based on safety and hygiene.<br>
+    </div>
+
+
+    <!--Script src below to avoid loading in other sheet as well-->
+    <script src="{% static 'safety/script.js' %}"></script>
+
+
+    <!---For Map APis-->
+    
+    <script src={{API_KEY}} async></script>
+    <div id="map"></div><br>
+
+    <!-- Autocomplete search box--> 
+    <input id="searchInput" class="controls" type="text" placeholder="Search for places here" size="50">
+
+    <!--Alerts-->
+
+    <div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <p><br><br>Success!<br><br></p>
+        </div>
+      
+      </div>
+
+
+
+    <!---Check if user is loggedin -->
+    <p style="display: none;" id="checkuser">{{user.id}}</p>
+
+    
+ 
+    
+
+    <div class="addressautofill" id="result" style="display: none;">        
+        <ul class="geo-data" style="list-style-type:none;">
+            
+            <!-- Photos of the place -->
+            <table style="column-gap: 40px;" id="photoblock">
+                <tr>
+                  <td><img class="photos" id="photo1"></td>
+                  <td><img class="photos" id="photo2"></td>
+                  <td><img class="photos" id="photo3"></td>
+                </tr>
+            </table>           
+
+
+
+
+            <li><h1 id="establishment"></h1></li>            
+            <li style="font-weight: bold;">Full Address: <span id="location"></span></li><br>
+             <!---Safety Rating System-->
+            
+            <div id="safety5star">
+            <span class="heading">Safety</span>
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
+            </div>
+            <div id="safety4star">
+                <span class="heading">Safety</span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star"></span>
+            </div>
+            <div id="safety3star">
+                <span class="heading">Safety</span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
+            </div>
+            <div id="safety2star">
+                <span class="heading">Safety</span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
+            </div>
+            <div id="safety1star">
+                <span class="heading">Safety</span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
+            </div>
+            <div id="safetynostar">
+                <span class="heading">Safety</span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
+            </div>
+            <p class="ratingclass" id="safetytotal"></p>
+            
+           
+            <!--Hygiene Ratings-->
+            
+            <div id="hygiene5star">
+            <span class="heading">Hygiene</span>
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
+            </div>
+            <div id="hygiene4star">
+                <span class="heading">Hygiene</span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star"></span>
+            </div>
+            <div id="hygiene3star">
+                <span class="heading">Hygiene</span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
+            </div>
+            <div id="hygiene2star">
+                <span class="heading">Hygiene</span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
+            </div>
+            <div id="hygiene1star">
+                <span class="heading">Hygiene</span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
+            </div>
+            <div id="hygienenostar">
+                <span class="heading">Hygiene</span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
+            </div>
+            <p class="ratingclass"  id="hygienetotal"></p>
+            <br>
+            <li class="recommendedclass"><strong>Single:</strong> <span id="Single"></span></li>
+            <li class="recommendedclass"><strong>Couple: </strong><span id="Couple"></span></li>
+            <li class="recommendedclass"><strong>Group: </strong><span id="Group"></span></li>
+            <li class="recommendedclass"><strong>LGBTQ Friendy </strong><span id="Lgbtq"></span></li><br>
+            
+            <h4 id="userreview"></h4><br>   
+                    
+            <button id="addreviewbtn" class="btn btn-primary" style="text-align: center;"><span>Add Review</span></button>
+            <button id="closereviewbtn" class="btn btn-primary"><span>Close</span></button><br>
+            <li id="notloggedinwarning" style="display: none;">You need to login to Add Review </li>   
+           
+            
+          
+        </ul>
+    </div>
+  
+    <div id="submitreview" class="container" style="display: none; text-align: center;">
+        <form id="submissionform">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name"><br><br>
+            <label for="safetyrating" class="form-label">Safety Rating (Between 0 and 5) </label>
+            <input id="safetyrating" type="range" class="form-range" min="0" max="5"><br>
+            <label for="hygienerating" class="form-label">Hygiene Rating (Between 0 and 5) </label>
+            <input id="hygienerating" type="range" class="form-range" min="0" max="5"><br>      
+            
+            <div class="form-check">
+                <label class="form-check-label" for="singlerating">
+                    Single 
+                </label>
+                <input id="singlerating" class="form-check-input" type="checkbox" value="">
+            </div>
+            <div class="form-check">
+                <label class="form-check-label" for="couplerating">
+                  Couple 
+                </label>
+                <input id="couplerating" class="form-check-input" type="checkbox" value="">
+            </div>
+            <div class="form-check">
+                <label class="form-check-label" for="grouprating">
+                  Group 
+                </label>
+                <input id="grouprating" class="form-check-input" type="checkbox" value="">
+            </div>
+            <div class="form-check">
+                <label class="form-check-label" for="lgbtqrating">
+                  LGBTQ Safe
+                </label>
+                <input id="lgbtqrating" class="form-check-input" type="checkbox" value="">
+            </div>
+            <textarea rows="4" cols="50" name="textreview" id="textreview" placeholder="Write a review"></textarea><br><br>
+            <input id="submitbtn" class="btn btn-primary"  type="button" value="Submit">
+            <input id="cancelbtn" class="btn btn-primary" type="button" value="Cancel">
+        </form>
+    </div>
+         
+{% endblock %}
+    </body>
+</html>
+

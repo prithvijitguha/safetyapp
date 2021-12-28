@@ -1,0 +1,1 @@
+web: gunicorn safetyproject.wsgi --log-file -

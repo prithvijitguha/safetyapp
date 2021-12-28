@@ -1,0 +1,415 @@
+* {
+    margin: 0; 
+    font-family: 'Open Sans', sans-serif;
+    box-sizing: border-box;
+}
+
+
+
+
+#map {
+    
+    height: 650px; /*default value when 'div result div' comes up is 250px */
+    width: 75%;
+    top: 40px;
+    left: 20px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 5%;
+    overflow:hidden;
+    transition: all 0.8s ease-out;
+    border-width: 10px;
+    border-style: double;
+}
+
+
+
+#result {
+  height: 650px; 
+  width: 55%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: x-large;
+  text-align: center;
+  float: right;
+  padding-right: 30px;
+  padding-left: 30px;
+}
+
+
+#photoblock {
+  margin-left: auto;
+  margin-right: auto;
+  width: 65%;
+}
+
+.photos {
+  padding: 5px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-radius: 25px;
+  width: 200px;
+  height: 200px;
+  
+}
+
+
+
+
+.navbar a{
+    font-size: xx-large;
+    font-weight: bold;
+    
+}
+
+.navbar .nav-item {
+  padding-right: 5%;
+  padding-left: 5%;
+}
+
+.intro {
+    margin-left: auto;
+    margin-right: auto;
+    height: auto;
+    text-align: center;
+    
+    width: 45%;
+    font-size: medium;
+}
+
+.intro h1 {
+ font-size: 250%;
+ font-weight: bold;
+ padding: 2%; 
+}
+
+
+.intro p {
+  font-size: 140%;
+}
+
+
+
+
+#searchInput{
+position: absolute;
+left: -100%;
+font-size: 22px;
+height: 8%;
+border: 2px solid #809fff;
+border-radius: 4px;
+}
+
+/* Rating systems */
+
+.heading {
+    font-size: 25px;
+    margin-right: 25px;
+  }
+  
+  .fa {
+    font-size: 25px;
+  }
+  
+  .checked {
+    color: orange;
+  }
+
+
+
+#submitreview {
+  height: 650px; 
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: large;
+  text-align: center;
+  float: right;
+  padding: 30px;
+}
+
+.reviews {
+  margin-left: auto;
+  margin-right: auto;
+
+  text-align: center;
+  font-size: large;
+ 
+}
+
+
+
+
+
+.ratingclass {
+  font-size: 60%;
+}
+
+.recommendedclass {
+  font-size: 80%;
+  list-style-type: none;
+}
+
+.recommendedclassprofile {
+  font-size: 100%;
+  list-style-type: none;
+}
+
+.heading {
+  font-size: 90%;
+  font-weight: bold;
+}
+
+.btn {
+  border-radius: 15px;
+  box-shadow: 0 5px #999;
+}
+
+.btn:active {
+  box-shadow: 0 4px #666;
+  transform: translateY(4px);
+}
+
+
+.deletedpost{
+  display: none;
+  text-align: center;
+}
+
+
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  text-align: center;
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  position: relative;
+  margin: auto;
+  padding: 0px;
+  border: 1px solid #888;
+  width: 80%;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+  -webkit-animation-name: animatetop;
+  -webkit-animation-duration: 0.4s;
+  animation-name: animatetop;
+  animation-duration: 0.4s;
+  font-size: x-large;
+}
+
+.allauth {
+  text-align: center;
+  font-size: large;
+  margin:auto;
+  padding: 10%;
+  
+  
+}
+
+.allauth ul {
+  list-style-type: none;
+  text-align: left;
+  
+}
+
+.allauth .socialaccount_providers{
+  left: 40%;
+  position: relative;
+}
+
+
+
+#submissionform {
+  width: 70%;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+
+
+
+.modal-body {padding: 2px 16px;}
+
+@-webkit-keyframes animatetop {
+  from {top:-300px; opacity:0} 
+  to {top:0; opacity:1}
+}
+
+@keyframes animatetop {
+  from {top:-300px; opacity:0}
+  to {top:0; opacity:1}
+}
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+
+
+/* Mobile Optimization */
+
+
+
+
+@media only screen and (max-width: 540px) {
+#map {
+    
+  height: 450px; /*default value when 'div result div' comes up is 250px */
+  width: 100%;
+  left: 0px;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 5%;
+  padding-bottom: 10px;  
+}
+
+.navbar a {
+  font-size: medium;
+}
+
+
+#result {
+height: 400px; 
+width: 100%;
+display: block;
+position: absolute;
+left: 0px;
+font-size: large;
+text-align: center;
+padding-left: 0px;
+padding-top: 10%;
+margin: 0px;
+}
+
+#searchInput {
+  height: 12%;
+  font-size: medium;
+}
+
+
+.intro {
+  padding: 5%;
+  margin-left: auto;
+  margin-right: auto;
+  height: auto;
+  text-align: center;
+  width: 100%;
+  font-size: small;
+}
+
+.intro h1 {
+font-size: 200%;
+padding: 2%; 
+}
+
+.intro h2 {
+font-size: medium;
+padding: 2%;
+}
+
+.intro p {
+font-size: 120%;
+}
+
+  
+#photoblock {
+  width: 100%;
+  
+  text-align: center;
+}
+
+
+.photos {
+  padding: 5px;
+  border-radius: 25px;
+  width: 100%;
+  height: 100px;
+  
+}
+
+
+#submitreview {
+  
+  width: 95%;
+  display: block;
+  position: absolute;
+  left: 10px;
+  font-size: large;
+  text-align: center;
+  padding: 0px;
+  padding-top: 10%;
+}
+
+
+.modal-content {
+  font-size: large;
+  width: 90%;
+}
+
+.allauth {
+  text-align: center;
+  font-size: large;
+  margin:auto;
+  padding: 10%;
+  
+}
+
+
+
+.allauth .socialaccount_providers {
+  text-align: center;
+  left: 0%;
+}
+
+
+.allauth ul {
+  padding: 0%;
+  list-style-type: none;
+  text-align: left;
+}
+
+
+
+#submissionform {
+  width: 80%;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+}
+
+
+
+
+
