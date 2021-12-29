@@ -1,3 +1,7 @@
+"""
+Register your URLS here
+"""
+
 from django.urls import path
 from . import views
 

@@ -11,7 +11,7 @@ jobs:
 
     runs-on: ubuntu-latest
     strategy:
-      max-parallel: 4
+      max-parallel: 3
       matrix:
         python-version: [3.9]
 
@@ -39,10 +39,10 @@ jobs:
     - name: Lint with pylint
       run: |
         pip install pylint
-        pylint safety/views.py
+        pylint safety safetyproject
 
     - name: Lint with black
       run: |
         pip install black
-        black safety/views.py
+        black .
 
