@@ -1,3 +1,7 @@
+"""
+Register your Models here
+"""
+# pylint: disable=missing-class-docstring,
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils import timezone

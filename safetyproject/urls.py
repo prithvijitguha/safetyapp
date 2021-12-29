@@ -1,3 +1,7 @@
+"""
+Register your main project URLS here
+"""
+
 from django.contrib import admin
 from django.urls import path, include
 

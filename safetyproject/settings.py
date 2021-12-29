@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 # flake8: noqa: E303,E501
-
+# pylint: disable=unused-import
 from pathlib import Path
 import os
 import dotenv
